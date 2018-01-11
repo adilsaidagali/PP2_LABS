@@ -13,7 +13,7 @@ namespace Lab1
             foreach(string s in args)
             {
                 bool t = true;
-                for (int i = 2; i < int.Parse(s); i++)
+                for (int i = 2; i < Math.Sqrt(int.Parse(s)); i++)
                     if (int.Parse(s) % i == 0)
                         t = false;
                 if (t == true)
