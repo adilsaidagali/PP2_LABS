@@ -16,7 +16,7 @@ namespace Lab1
                 for (int i = 2; i <= Math.Sqrt(int.Parse(s)); i++)
                     if (int.Parse(s) % i == 0)
                         t = false;
-                if (t == true)
+                if (t == true && int.Parse(s) != 1)
                     Console.WriteLine(int.Parse(s));
             }
             Console.ReadKey();
