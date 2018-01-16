@@ -7,11 +7,11 @@ public class Circle
     {
         Radius = 0;
     }
-    public static float FindArea(float r)
+    public float FindArea(float r)
     {
         return Math.PI * r * r;
     }
-    public static float FindLength(float r)
+    public float FindLength(float r)
     {
         return Math.PI * 2 * r;
     }

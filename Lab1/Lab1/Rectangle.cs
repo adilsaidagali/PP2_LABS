@@ -3,11 +3,11 @@
 public class Rectangle
 {
     public int Width, Length, Area, Perimetr;
-    public static float FindArea(int w, int l)
+    public float FindArea(int w, int l)
     {
         return w * l;
     }
-    public static int FindPerimetr(int w, int l)
+    public int FindPerimetr(int w, int l)
     {
         return w + l + w + l;
     }
