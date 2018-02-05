@@ -71,12 +71,23 @@ namespace LAB_3
                     else
                     {
                         StreamReader sr = new StreamReader(directory.GetFileSystemInfos()[cursor].FullName);
-                        Console.Clear();
-                        string s = sr.ReadToEnd();
-                        Console.BackgroundColor = ConsoleColor.DarkGray;
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.WriteLine(s);
-                        Console.ReadKey();
+                        try
+                        {
+                            Console.Clear();
+                            string s = sr.ReadToEnd();
+                            Console.BackgroundColor = ConsoleColor.DarkGray;
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine(s);
+                            Console.ReadKey();
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Отказано в доступе!");
+                        }
+                        finally
+                        {
+                            sr.Close();
+                        }
                     }
                 }
 
