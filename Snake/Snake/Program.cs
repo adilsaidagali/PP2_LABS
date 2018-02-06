@@ -11,47 +11,28 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            Console.Clear();
-            Wall wall = new Wall();
-            wall.Draw();
-            List<Point> wallBody = new List<Point>();
-            StreamReader sr = new StreamReader(@"C:\Users\Адиль\Desktop\PP2_LABS\Snake\Level1.txt");
-            for (int i = 0; i < 23; i++)
-            {
-                string s = sr.ReadLine();
-                for (int j = 0; j < s.Length; j++)
-                    if (s[j] == '#')
-                        wallBody.Add(new Point(j, i));
-            }
-            foreach (Point point in wallBody)
-            {
-                Console.SetCursorPosition(point.x, point.y);
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("#");
-            }
+            bool leaveTheGame = false;
+            int levelCount = 1;
+            int score = 0;
             Console.CursorVisible = false;
             Console.SetWindowSize(100, 31);
             Snake snake = new Snake();
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.SetCursorPosition(0, 0);
-            Console.BackgroundColor = ConsoleColor.Gray;
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.SetCursorPosition(4, 3);
-            Console.WriteLine('O');
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.SetCursorPosition(3, 3);
-            Console.WriteLine('O');
-            Console.SetCursorPosition(2, 3);
-            Console.WriteLine('O');
             Food food = new Food();
+            food.x = 10;
+            food.y = 10;
+            Wall wall = new Wall();
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.SetCursorPosition(food.x, food.y);
+            Console.SetCursorPosition(10, 10);
             Console.WriteLine('@');
+            wall.LoadLevel(levelCount);
+            wall.Draw();
             while (true)
             {
                 int x = 0, y = 0;
                 ConsoleKeyInfo k = new ConsoleKeyInfo();
                 k = Console.ReadKey();
+                if (k.Key == ConsoleKey.Escape)
+                    break;
                 if ((k.Key == ConsoleKey.UpArrow || k.Key == ConsoleKey.W))
                     y = -1;
                 if ((k.Key == ConsoleKey.DownArrow || k.Key == ConsoleKey.S))
@@ -60,28 +41,78 @@ namespace Snake
                     x = -1;
                 if (k.Key == ConsoleKey.RightArrow || k.Key == ConsoleKey.D)
                     x = 1;
+                snake.Move(x, y);
                 if (snake.body[0].x == food.x && snake.body[0].y == food.y)
                 {
                     snake.AddToBody();
                     food.NewPosition(snake.body, wall.body);
+                    score++;
                 }
-                snake.Move(x, y);
-                if (snake.CheckGame(wall.body))
+                if (score == 3 && levelCount == 1)
+                {
+                    levelCount++;
+                    wall.LoadLevel(levelCount);
+                    wall.Draw();
+                    snake.body.Clear();
+                    snake.body.Add(new Point(4, 3));
+                    snake.body.Add(new Point(3, 3));
+                    snake.body.Add(new Point(2, 3));
+                    score = 0;
+                }
+                if (score == 3 && levelCount == 2)
+                {
+                    Console.Clear();
+                    Console.SetCursorPosition(15, 10);
+                    Console.WriteLine("YOU WIN!!!");
+                    Console.SetCursorPosition(15, 11);
+                    Console.WriteLine("Press ENTER to restart the game");
+                    Console.SetCursorPosition(15, 12);
+                    Console.WriteLine("Press ESCAPE to leave the game");
+                    while (true)
+                    {
+                        ConsoleKeyInfo key = Console.ReadKey();
+                        if (key.Key == ConsoleKey.Escape)
+                        {
+                            leaveTheGame = true;
+                            break;
+                        }
+                        if (key.Key == ConsoleKey.Enter)
+                        {
+                            levelCount = 1;
+                            wall.LoadLevel(levelCount);
+                            wall.Draw();
+                            snake.body.Clear();
+                            snake.body.Add(new Point(4, 3));
+                            snake.body.Add(new Point(3, 3));
+                            snake.body.Add(new Point(2, 3));
+                            score = 0;
+                            break;
+                        }
+                    }
+                }
+                if (leaveTheGame == true)
                     break;
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Blue;
-                wall.Draw();
-                Console.BackgroundColor = ConsoleColor.Gray;
+                if (snake.CheckGame(wall.body))
+                {
+                    wall.LoadLevel(levelCount);
+                    wall.Draw();
+                    snake.body.Clear();
+                    snake.body.Add(new Point(4, 3));
+                    snake.body.Add(new Point(3, 3));
+                    snake.body.Add(new Point(2, 3));
+                    score = 0;
+                }
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.SetCursorPosition(food.x, food.y);
                 Console.WriteLine("@");
                 snake.Draw();
+                //wall.Draw();
+                Console.SetCursorPosition(0, 23);
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("Score: ");
+                Console.SetCursorPosition(7, 23);
+                Console.Write(score);
             }
-            Console.Clear();
-            Console.SetCursorPosition(50, 15);
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.WriteLine("GAME OVER!!!");
-            Console.ReadKey();
         }
     }
 }

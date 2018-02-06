@@ -19,6 +19,11 @@ namespace Snake
         public void Move(int x, int y)
         {
             int i = 1;
+            Console.SetCursorPosition(body[body.Count - 1].x, body[body.Count - 1].y);
+            Console.WriteLine(' ');
+            Console.SetCursorPosition(body[0].x, body[0].y);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine('O');
             for (i = body.Count - 1; i > 0; i--)
             {
                 body[i].x = body[i - 1].x;
@@ -27,17 +32,21 @@ namespace Snake
             body[0].x = body[0].x + x;
             body[0].y = body[0].y + y;
             if (body[0].x == -1)
-                body[0].x = 79;
-            if (body[0].x == 80)
+                body[0].x = 63;
+            if (body[0].x == 64)
                 body[0].x = 0;
             if (body[0].y == -1)
-                body[0].y = 30;
-            if (body[0].y == 31)
+                body[0].y = 22;
+            if (body[0].y == 23)
                 body[0].y = 0;
+            
         }
         public void Draw()
         {
-            int i = 0;
+            Console.SetCursorPosition(body[0].x, body[0].y);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine('O');
+            /*int i = 0;
             foreach (Point point in body)
             {
                 if (i == 0)
@@ -47,7 +56,7 @@ namespace Snake
                 Console.SetCursorPosition(point.x, point.y);
                 i = 1;
                 Console.WriteLine('O');
-            }
+            }*/
         }
         public void AddToBody()
         {
