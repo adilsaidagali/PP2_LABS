@@ -21,11 +21,11 @@ namespace Snake
             food.x = 10;
             food.y = 10;
             Wall wall = new Wall();
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.SetCursorPosition(10, 10);
-            Console.WriteLine('@');
             wall.LoadLevel(levelCount);
             wall.Draw();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.SetCursorPosition(10, 10);
+            Console.Write('@');
             while (true)
             {
                 int x = 0, y = 0;
@@ -48,7 +48,7 @@ namespace Snake
                     food.NewPosition(snake.body, wall.body);
                     score++;
                 }
-                if (score == 3 && levelCount == 1)
+                if (score == 5 && levelCount == 1)
                 {
                     levelCount++;
                     wall.LoadLevel(levelCount);
@@ -59,7 +59,7 @@ namespace Snake
                     snake.body.Add(new Point(2, 3));
                     score = 0;
                 }
-                if (score == 3 && levelCount == 2)
+                if (score == 5 && levelCount == 2)
                 {
                     Console.Clear();
                     Console.SetCursorPosition(15, 10);
@@ -68,6 +68,8 @@ namespace Snake
                     Console.WriteLine("Press ENTER to restart the game");
                     Console.SetCursorPosition(15, 12);
                     Console.WriteLine("Press ESCAPE to leave the game");
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.WriteLine("Iliyas PEDIK");
                     while (true)
                     {
                         ConsoleKeyInfo key = Console.ReadKey();

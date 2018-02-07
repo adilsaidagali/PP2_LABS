@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Complex_pr
 {
+    [Serializable]
     class Complex
     {
         public int c1, c2;
