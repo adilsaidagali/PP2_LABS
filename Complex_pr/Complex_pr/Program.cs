@@ -10,17 +10,16 @@ namespace Complex_pr
 {
     class Program
     {
-        static void f1()
+        static void f1(Complex ans)
         {
-            FileStream fs = new FileStream(@"C:\Users\Адиль\Desktop\PP2_LABS\Complex_pr\Complex_pr\data.ser", FileMode.Create, FileAccess.Write);
+            FileStream fs = new FileStream(@"C:\Users\Адиль\Desktop\PP2_LABS\Complex_pr\Complex_pr\data.ser", FileMode.OpenOrCreate, FileAccess.Write);
             BinaryFormatter bf = new BinaryFormatter();
-            Complex ans = new Complex();
             bf.Serialize(fs, ans);
             fs.Close();
         }
         static Complex f2()
         {
-            FileStream fs = new FileStream(@"C:\Users\Адиль\Desktop\PP2_LABS\Complex_pr\Complex_pr\data.ser", FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(@"C:\Users\Адиль\Desktop\PP2_LABS\Complex_pr\Complex_pr\data.ser", FileMode.OpenOrCreate, FileAccess.Read);
             BinaryFormatter bf = new BinaryFormatter();
             Complex ans = bf.Deserialize(fs) as Complex;
             fs.Close();
@@ -43,7 +42,7 @@ namespace Complex_pr
                     ans += c;
             }
             ans.Simplify();
-            f1();
+            f1(ans);
             Console.WriteLine(ans);
             Console.ReadKey();
         }

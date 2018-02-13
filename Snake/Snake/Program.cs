@@ -4,17 +4,112 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Snake
 {
     class Program
     {
+        static void f1(HighScores highScores)
+        {
+            FileStream fs = new FileStream(@"C:\Users\Адиль\Desktop\PP2_LABS\Snake\Snake\data.ser", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(fs, highScores);
+            fs.Close();
+        }
+        static HighScores f2()
+        {
+            FileStream fs = new FileStream(@"C:\Users\Адиль\Desktop\PP2_LABS\Snake\Snake\data.ser", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            BinaryFormatter bf = new BinaryFormatter();
+            HighScores highScores = bf.Deserialize(fs) as HighScores;
+            fs.Close();
+            return highScores;
+        }
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
+            Console.Write("Write your login: ");
+            String s = Console.ReadLine();
+            HighScores Adil = new HighScores();
+            HighScores highScores = f2();
+            int cursor = 0, t = 0;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("Start Game");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("LeaderBord");
+            Console.WriteLine("Exit");
+            HighScores hi = new HighScores();
+            while (true)
+            {
+                ConsoleKeyInfo key = Console.ReadKey();
+                if (key.Key == ConsoleKey.UpArrow)
+                    cursor--;
+                if (key.Key == ConsoleKey.DownArrow)
+                    cursor++;
+                if (cursor == -1)
+                    cursor = 2;
+                if (cursor == 3)
+                    cursor = 0;
+                if (cursor == 0)
+                {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine("Start Game");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("LeaderBord");
+                    Console.WriteLine("Exit");
+                }
+                if (cursor == 1)
+                {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Start Game");
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine("LeaderBord");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Exit");
+                }
+                if (cursor == 2)
+                {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Start Game");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("LeaderBord");
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine("Exit");
+                }
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    if (cursor == 0 || cursor == 2)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        for (int i = 0; i < highScores.name.Count; i++)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.Write(highScores.name[i]);
+                            Console.Write("  ");
+                            Console.Write(highScores.score[i]);
+                            Console.WriteLine();
+                        }
+                        Console.ReadKey();
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.WriteLine("Start Game");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("LeaderBord");
+                        cursor = 0;
+                    }
+                }
+            }
             bool leaveTheGame = false;
             int levelCount = 1;
             int score = 0;
-            Console.CursorVisible = false;
             Console.SetWindowSize(100, 31);
             Snake snake = new Snake();
             Food food = new Food();
@@ -26,6 +121,21 @@ namespace Snake
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.SetCursorPosition(10, 10);
             Console.Write('@');
+            int pos = -1;
+            for (int i = 0; i < highScores.name.Count; i++)
+            {
+                if (highScores.name[i] == s)
+                {
+                    pos = i;
+                    break;
+                }
+            }
+            if (pos == -1)
+            {
+                highScores.name.Add(s);
+                highScores.score.Add(0);
+                pos = highScores.name.Count - 1;
+            }
             while (true)
             {
                 int x = 0, y = 0;
@@ -48,7 +158,7 @@ namespace Snake
                     food.NewPosition(snake.body, wall.body);
                     score++;
                 }
-                if (score == 5 && levelCount == 1)
+                if (score == 10 && levelCount == 1)
                 {
                     levelCount++;
                     wall.LoadLevel(levelCount);
@@ -58,8 +168,9 @@ namespace Snake
                     snake.body.Add(new Point(3, 3));
                     snake.body.Add(new Point(2, 3));
                     score = 0;
+                    t = 10;
                 }
-                if (score == 5 && levelCount == 2)
+                if (score == 10 && levelCount == 2)
                 {
                     Console.Clear();
                     Console.SetCursorPosition(15, 10);
@@ -114,7 +225,22 @@ namespace Snake
                 Console.WriteLine("Score: ");
                 Console.SetCursorPosition(7, 23);
                 Console.Write(score);
+                if (score + t > highScores.score[pos])
+                {
+                    highScores.score[pos] = score + t;
+                }
             }
+            /*Console.Clear();
+            for (int i = 0; i < highScores.name.Count; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(highScores.name[i]);
+                Console.Write("  ");
+                Console.Write(highScores.score[i]);
+                Console.WriteLine();
+            }
+            Console.ReadKey();*/
+            f1(highScores);
         }
     }
 }
