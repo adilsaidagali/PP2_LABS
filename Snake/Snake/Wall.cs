@@ -18,7 +18,7 @@ namespace Snake
         {
             Console.Clear();
             body.Clear();
-            string path = @"C:\Users\Адиль\Desktop\PP2_LABS\Snake\Level";
+            string path = @"C:\Users\Адиль\Desktop\Snake\Levels\Level";
             path += level.ToString() + ".txt";
             StreamReader sr = new StreamReader(path);
             for (int i = 0; i < 23; i++)
@@ -28,20 +28,6 @@ namespace Snake
                     if (s[j] == '#')
                         body.Add(new Point(j, i));
             }
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.SetCursorPosition(0, 0);
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.SetCursorPosition(4, 3);
-            Console.WriteLine('O');
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.SetCursorPosition(3, 3);
-            Console.WriteLine('O');
-            Console.SetCursorPosition(2, 3);
-            Console.WriteLine('O');
-            Console.SetCursorPosition(0, 23);
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write("Score: ");
-            Console.Write(0);
             sr.Close();
         }
         public void Draw()

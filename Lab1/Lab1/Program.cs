@@ -10,7 +10,7 @@ namespace Lab1
     {
         static void Main(string[] args)
         {
-            foreach(string s in args)
+            /*foreach(string s in args)
             {
                 bool t = true;
                 for (int i = 2; i <= Math.Sqrt(int.Parse(s)); i++)
@@ -19,6 +19,12 @@ namespace Lab1
                 if (t == true && int.Parse(s) != 1)
                     Console.WriteLine(int.Parse(s));
             }
+            Console.ReadKey();
+            */
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("OO");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("O");
             Console.ReadKey();
         }
     }

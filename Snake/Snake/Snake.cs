@@ -16,14 +16,15 @@ namespace Snake
             body.Add(new Point(3, 3));
             body.Add(new Point(2, 3));
         }
-        public void Move(int x, int y)
+        public void Move(int x, int y, bool moovable)
         {
             int i = 1;
             Console.SetCursorPosition(body[body.Count - 1].x, body[body.Count - 1].y);
-            Console.WriteLine(' ');
+            if (moovable == false)
+                Console.Write(' ');
             Console.SetCursorPosition(body[0].x, body[0].y);
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine('O');
+            Console.ForegroundColor = Menu.snakeBodyColor;
+            Console.Write('O');
             for (i = body.Count - 1; i > 0; i--)
             {
                 body[i].x = body[i - 1].x;
@@ -44,8 +45,8 @@ namespace Snake
         public void Draw()
         {
             Console.SetCursorPosition(body[0].x, body[0].y);
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine('O');
+            Console.ForegroundColor = Menu.snakeHeadColor;
+            Console.Write('O');
             /*int i = 0;
             foreach (Point point in body)
             {
