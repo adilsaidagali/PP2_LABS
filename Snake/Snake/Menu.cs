@@ -58,7 +58,7 @@ namespace Snake
                     speed = Math.Max(100, speed - 10);
                 }
                 highScores.score[pos] = Math.Max(score + sc, highScores.score[pos]);
-                if (score == 5 && levelCount < maxLevel)
+                if (score != 0 && score % 5 == 0 && levelCount < maxLevel)
                 {
                     x = 1;
                     y = 0;
@@ -72,7 +72,7 @@ namespace Snake
                     score = 0;
                     sc = levelCount * 5 - 5;
                 }
-                if (score == 5 && levelCount == maxLevel)
+                if (score != 0 && score % 5 == 0 && levelCount == maxLevel)
                 {
                     Console.Clear();
                     Console.SetCursorPosition(0, 0);
@@ -105,7 +105,7 @@ namespace Snake
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine("Score: ");
                 Console.SetCursorPosition(7, 23);
-                Console.Write(score);
+                Console.Write(score + sc);
                 snake.Move(x, y, moovable);
                 snake.Draw();
                 Thread.Sleep(speed);
@@ -273,22 +273,22 @@ namespace Snake
                             k = Console.ReadKey();
                             if (k.Key == ConsoleKey.Escape)
                                 break;
-                            if ((k.Key == ConsoleKey.UpArrow || k.Key == ConsoleKey.W))
+                            if ((k.Key == ConsoleKey.UpArrow || k.Key == ConsoleKey.W) && y != 1)
                             {
                                 y = -1;
                                 x = 0;
                             }
-                            if ((k.Key == ConsoleKey.DownArrow || k.Key == ConsoleKey.S))
+                            if ((k.Key == ConsoleKey.DownArrow || k.Key == ConsoleKey.S) && y != -1)
                             {
                                 y = 1;
                                 x = 0;
                             }
-                            if ((k.Key == ConsoleKey.LeftArrow || k.Key == ConsoleKey.A))
+                            if ((k.Key == ConsoleKey.LeftArrow || k.Key == ConsoleKey.A) && x != 1)
                             {
                                 x = -1;
                                 y = 0;
                             }
-                            if (k.Key == ConsoleKey.RightArrow || k.Key == ConsoleKey.D)
+                            if ((k.Key == ConsoleKey.RightArrow || k.Key == ConsoleKey.D) && x != -1)
                             {
                                 x = 1;
                                 y = 0;
