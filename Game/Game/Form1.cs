@@ -18,7 +18,7 @@ namespace Game
         {
             InitializeComponent();
             Timer timer = new Timer();
-            timer.Interval = 30;
+            timer.Interval = 10;
             timer.Enabled = true;
             timer.Tick += new System.EventHandler(timer_Tick);
             label3.Location = new Point(40, 100);
